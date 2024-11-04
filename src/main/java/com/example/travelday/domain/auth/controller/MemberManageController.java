@@ -6,6 +6,7 @@ import com.example.travelday.domain.auth.service.FileService;
 
 import com.example.travelday.domain.auth.entity.Member;
 
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -42,6 +43,7 @@ public class MemberManageController {
     /**
      * 닉네임 중복 검사
      */
+    // what: 닉네임 수정에는 RequestBody 사용해서 받아왔는데 중복검사에는 RequestParam으로 받아온 이유가 뭔가요?
     @GetMapping("/nickname/check")
     public ResponseEntity<ApiResponseEntity<String>> duplicateNickname(
             @RequestParam String nickname) {
@@ -53,8 +55,8 @@ public class MemberManageController {
     /**
      * 닉네임 수정
      */
-    @PutMapping("/nickname")
-    public ResponseEntity<ApiResponseEntity<String>> updateNickname(@AuthenticationPrincipal UserDetails userDetails, @RequestBody UpdateNicknameReqDto reqDto) {
+    @PutMapping("/nickname") //todo: reqdto 이름 변경
+    public ResponseEntity<ApiResponseEntity<String>> updateNickname(@AuthenticationPrincipal UserDetails userDetails, @Valid @RequestBody UpdateNicknameReqDto reqDto) {
         memberManageService.updateNickname(userDetails.getUsername(), reqDto.nickname());
         return ResponseEntity.ok(ApiResponseEntity.of(ResponseText.SUCCESS_UPDATE_NICKNAME));
     }
