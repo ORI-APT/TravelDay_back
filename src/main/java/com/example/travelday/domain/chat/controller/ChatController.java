@@ -8,6 +8,7 @@ import com.example.travelday.domain.chat.utils.ChatBucket;
 import com.example.travelday.global.common.ApiResponseEntity;
 import com.example.travelday.global.utils.BucketUtils;
 import io.github.bucket4j.Bucket;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -87,7 +88,7 @@ public class ChatController {
      */
     @MessageMapping("/chat/rooms/{travelRoomId}")
     @SendTo("/sub/chat/rooms/{travelRoomId}")
-    public ChatMessageResDto sendChatMessage(@DestinationVariable("travelRoomId") Long travelRoomId, @Payload String message, SimpMessageHeaderAccessor accessor) {
+    public ChatMessageResDto sendChatMessage(@DestinationVariable("travelRoomId") Long travelRoomId, @Valid @Payload ChatReqDto chatReqDto, SimpMessageHeaderAccessor accessor) {
         String senderId = sessions.get(accessor.getSessionId());
 
         // todo: 검증 코드 분리
@@ -95,12 +96,6 @@ public class ChatController {
         if (senderId == null) {
             log.error("Invalid session ID or user is not authenticated.");
             throw new IllegalStateException("User is not authenticated or session is invalid."); // todo: 에러코드 정의
-        }
-
-        // 메시지 길이 제한 (최대 5000자)
-        if (message.length() > 5000) {
-            log.error("Message exceeds the maximum allowed length of 5000 characters.");
-            throw new IllegalArgumentException("Message exceeds the maximum allowed length of 5000 characters."); // todo: 에러코드 정의
         }
 
         if (userBanEndTime.containsKey(senderId) && System.currentTimeMillis() < userBanEndTime.get(senderId)) {
@@ -116,12 +111,7 @@ public class ChatController {
             return null;
         }
 
-        ChatReqDto chatReqDto = ChatReqDto.builder()
-                .senderId(senderId)
-                .message(message)
-                .build();
-
-        return ChatMessageResDto.of(chatService.saveChat(travelRoomId, chatReqDto), leftBucketToken);
+        return ChatMessageResDto.of(chatService.saveChat(travelRoomId, chatReqDto, senderId), leftBucketToken);
     }
 
     /**

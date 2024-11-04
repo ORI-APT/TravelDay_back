@@ -29,14 +29,14 @@ public class ChatService {
     private final MemberRepository memberRepository;
     private final UserTravelRoomRepository userTravelRoomRepository;
 
-    public Chat saveChat(Long travelRoomId, ChatReqDto chatReqDto) {
+    public Chat saveChat(Long travelRoomId, ChatReqDto chatReqDto, String senderId) {
 
-        Member member = memberRepository.findByUserId(chatReqDto.senderId())
+        Member member = memberRepository.findByUserId(senderId)
                             .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
         Chat chat = Chat.builder()
                         .travelRoomId(travelRoomId)
-                        .senderId(chatReqDto.senderId())
+                        .senderId(senderId)
                         .senderNickname(member.getNickname())
                         .message(chatReqDto.message())
                         .build();
