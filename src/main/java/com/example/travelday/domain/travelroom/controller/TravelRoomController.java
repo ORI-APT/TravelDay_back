@@ -7,6 +7,7 @@ import com.example.travelday.domain.travelroom.dto.response.TravelRoomResDto;
 import com.example.travelday.domain.travelroom.service.TravelRoomService;
 import com.example.travelday.global.common.ApiResponseEntity;
 import com.example.travelday.global.common.ResponseText;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +38,8 @@ public class TravelRoomController {
      * 여행방 단일 조회
      */
     @GetMapping("/{travelRoomId}")
-    public ResponseEntity<ApiResponseEntity<TravelRoomResDto>> getTravelRoom(@PathVariable Long travelRoomId, @AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<ApiResponseEntity<TravelRoomResDto>> getTravelRoom(@PathVariable Long travelRoomId,
+                                                                             @AuthenticationPrincipal UserDetails userDetails) {
         TravelRoomResDto travelRoom = travelRoomService.getTravelRoomById(travelRoomId, userDetails.getUsername());
         return ResponseEntity.ok(ApiResponseEntity.of(travelRoom));
     }
@@ -46,8 +48,9 @@ public class TravelRoomController {
      * 여행방 생성
      */
     @PostMapping
-    public ResponseEntity<ApiResponseEntity<String>> createTravelRoom(@RequestBody TravelRoomReqDto requestDto, @AuthenticationPrincipal UserDetails userDetails) {
-        travelRoomService.createTravelRoom(requestDto, userDetails.getUsername());
+    public ResponseEntity<ApiResponseEntity<String>> createTravelRoom(@Valid @RequestBody TravelRoomReqDto travelRoomReqDto,
+                                                                      @AuthenticationPrincipal UserDetails userDetails) {
+        travelRoomService.createTravelRoom(travelRoomReqDto, userDetails.getUsername());
         return ResponseEntity.ok(ApiResponseEntity.of(ResponseText.SUCCESS_CREATE_TRAVELROOM));
     }
 
@@ -55,7 +58,8 @@ public class TravelRoomController {
      * 여행방 삭제
      */
     @DeleteMapping("/{travelRoomId}")
-    public ResponseEntity<ApiResponseEntity<String>> deleteTravelRoom(@PathVariable Long travelRoomId, @AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<ApiResponseEntity<String>> deleteTravelRoom(@PathVariable Long travelRoomId,
+                                                                      @AuthenticationPrincipal UserDetails userDetails) {
         travelRoomService.deleteTravelRoom(travelRoomId, userDetails.getUsername());
         return ResponseEntity.ok(ApiResponseEntity.of(ResponseText.SUCCESS_DELETE_TRAVELROOM));
     }
@@ -64,8 +68,9 @@ public class TravelRoomController {
      * 여행방 수정
      */
     @PostMapping("/{travelRoomId}")
-    public ResponseEntity<ApiResponseEntity<String>> updateTravelRoom(@PathVariable Long travelRoomId, @RequestBody TravelRoomReqDto requestDto, @AuthenticationPrincipal UserDetails userDetails) {
-        travelRoomService.updateTravelRoom(travelRoomId, requestDto, userDetails.getUsername());
+    public ResponseEntity<ApiResponseEntity<String>> updateTravelRoom(@PathVariable Long travelRoomId,
+                                                                      @Valid @RequestBody TravelRoomReqDto travelRoomReqDto, @AuthenticationPrincipal UserDetails userDetails) {
+        travelRoomService.updateTravelRoom(travelRoomId, travelRoomReqDto, userDetails.getUsername());
         return ResponseEntity.ok(ApiResponseEntity.of(ResponseText.SUCCESS_UPDATE_TRAVELROOM));
     }
 
