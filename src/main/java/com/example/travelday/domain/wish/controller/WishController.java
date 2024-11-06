@@ -27,7 +27,8 @@ public class WishController {
      * 위시리스트 조회
      */
     @GetMapping()
-    public ResponseEntity<ApiResponseEntity<List<WishResDto>>> getWishlist(@PathVariable Long travelRoomId, @AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<ApiResponseEntity<List<WishResDto>>> getWishlist(@PathVariable Long travelRoomId,
+                                                                           @AuthenticationPrincipal UserDetails userDetails) {
         return ResponseEntity.ok(ApiResponseEntity.of(wishService.getWishlist(travelRoomId, userDetails.getUsername())));
     }
 
@@ -35,7 +36,9 @@ public class WishController {
      * 위시 추가
      */
     @PostMapping()
-    public ResponseEntity<ApiResponseEntity<String>> addWish(@PathVariable Long travelRoomId, @Valid @RequestBody WishReqDto wishReqDto, @AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<ApiResponseEntity<String>> addWish(@PathVariable Long travelRoomId,
+                                                             @Valid @RequestBody WishReqDto wishReqDto,
+                                                             @AuthenticationPrincipal UserDetails userDetails) {
         wishService.addWish(travelRoomId, wishReqDto, userDetails.getUsername());
         return ResponseEntity.ok(ApiResponseEntity.of(ResponseText.SUCCESS_ADD_WISH));
     }
@@ -44,7 +47,9 @@ public class WishController {
      * 위시 삭제
      */
     @DeleteMapping("/{wishId}")
-    public ResponseEntity<ApiResponseEntity<String>> deleteWish(@PathVariable Long travelRoomId, @PathVariable Long wishId, @AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<ApiResponseEntity<String>> deleteWish(@PathVariable Long travelRoomId,
+                                                                @PathVariable Long wishId,
+                                                                @AuthenticationPrincipal UserDetails userDetails) {
         wishService.deleteWish(travelRoomId, wishId, userDetails.getUsername());
         return ResponseEntity.ok(ApiResponseEntity.of(ResponseText.SUCCESS_DELETE_WISH));
     }

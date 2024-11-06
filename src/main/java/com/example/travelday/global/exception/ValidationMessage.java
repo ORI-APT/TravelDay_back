@@ -22,4 +22,14 @@ public class ValidationMessage {
     public static final String TRAVELPLAN_NAME_REQUIRED = "여행 일정 이름은 필수 항목입니다.";
     public static final String TRAVELPLAN_SCHEDULED_DAY_REQUIRED = "여행 일정 날짜는 필수 항목입니다.";
 
+    public static final String TRAVELROOM_NAME_REQUIRED = "여행방 이름은 필수 항목입니다.";
+    public static final String TRAVELROOM_START_DATE_REQUIRED = "여행 시작 날짜는 필수 항목입니다.";
+    public static final String TRAVELROOM_END_DATE_REQUIRED = "여행 종료 날짜는 필수 항목입니다.";
+    public static final String TRAVELROOM_START_DATE_PATTERN = "여행 시작 날짜는 yyyy-MM-dd 형식이어야 합니다.";
+    public static final String TRAVELROOM_END_DATE_PATTERN = "여행 종료 날짜는 yyyy-MM-dd 형식이어야 합니다.";
+
+    public static final String WISH_NAME_REQUIRED = "위시 이름은 필수 항목입니다.";
+    public static final String WISH_LATITUDE_REQUIRED = "위시 위도는 필수 항목입니다.";
+    public static final String WISH_LONGITUDE_REQUIRED = "위시 경도는 필수 항목입니다.";
+
 }
