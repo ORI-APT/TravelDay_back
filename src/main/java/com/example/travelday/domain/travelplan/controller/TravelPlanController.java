@@ -30,7 +30,8 @@ public class TravelPlanController {
      * 여행 일정 목록 조회
      */
     @GetMapping
-    public ResponseEntity<ApiResponseEntity<List<TravelPlanResDto>>> getTravelPlanList(@PathVariable Long travelRoomId, @AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<ApiResponseEntity<List<TravelPlanResDto>>> getTravelPlanList(@PathVariable Long travelRoomId,
+                                                                                       @AuthenticationPrincipal UserDetails userDetails) {
         List<TravelPlanResDto> travelPlans = travelPlanService.getAllTravelPlan(travelRoomId, userDetails.getUsername());
         return ResponseEntity.ok(ApiResponseEntity.of(travelPlans));
     }
@@ -39,7 +40,8 @@ public class TravelPlanController {
      * 수정 중인지 확인
      */
     @PostMapping("/check/editable")
-    public ResponseEntity<ApiResponseEntity<Boolean>> isEditable(@PathVariable Long travelRoomId, @AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<ApiResponseEntity<Boolean>> isEditable(@PathVariable Long travelRoomId,
+                                                                 @AuthenticationPrincipal UserDetails userDetails) {
         return ResponseEntity.ok(ApiResponseEntity.of(travelPlanService.checkUsing(travelRoomId, userDetails.getUsername())));
     }
 
@@ -47,7 +49,9 @@ public class TravelPlanController {
      * 여행 일정 수정
      */
     @PostMapping
-    public ResponseEntity<ApiResponseEntity<String>> updateTravelPlan(@PathVariable Long travelRoomId, @RequestBody @Valid UpdateTravelPlansReqDto updateTravelPlanListDto, @AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<ApiResponseEntity<String>> updateTravelPlan(@PathVariable Long travelRoomId,
+                                                                      @Valid @RequestBody UpdateTravelPlansReqDto updateTravelPlanListDto,
+                                                                      @AuthenticationPrincipal UserDetails userDetails) {
         travelPlanService.updateTravelPlan(travelRoomId, updateTravelPlanListDto, userDetails.getUsername());
         return ResponseEntity.ok(ApiResponseEntity.of(ResponseText.SUCCESS_UPDATE_TRAVELPLAN));
     }
@@ -56,7 +60,9 @@ public class TravelPlanController {
      * 여행 일정 목록 추가하기
      */
     @PostMapping("/list")
-    public ResponseEntity<ApiResponseEntity<String>> addTravelPlanlist(@PathVariable Long travelRoomId, @RequestBody @Valid TravelPlansReqDto travelPlanListReqDto, @AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<ApiResponseEntity<String>> addTravelPlanlist(@PathVariable Long travelRoomId,
+                                                                       @Valid @RequestBody TravelPlansReqDto travelPlanListReqDto,
+                                                                       @AuthenticationPrincipal UserDetails userDetails) {
         travelPlanService.addTravelPlanList(travelRoomId, travelPlanListReqDto, userDetails.getUsername());
         return ResponseEntity.ok(ApiResponseEntity.of(ResponseText.SUCCESS_CREATE_TRAVELPLANLIST));
     }
@@ -65,7 +71,9 @@ public class TravelPlanController {
      * 여행 일정 바로 추가
      */
     @PostMapping("/direct")
-    public ResponseEntity<ApiResponseEntity<String>> addTravelPlanDirect(@PathVariable Long travelRoomId, @RequestBody TravelPlanReqDto travelPlanReqDto, @AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<ApiResponseEntity<String>> addTravelPlanDirect(@PathVariable Long travelRoomId,
+                                                                         @RequestBody TravelPlanReqDto travelPlanReqDto,
+                                                                         @AuthenticationPrincipal UserDetails userDetails) {
         travelPlanService.addTravelPlanDirect(travelRoomId, travelPlanReqDto, userDetails.getUsername());
         return ResponseEntity.ok(ApiResponseEntity.of(ResponseText.SUCCESS_CREATE_TRAVELPLAN));
     }

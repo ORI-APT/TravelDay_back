@@ -12,5 +12,14 @@ public class ValidationMessage {
     public static final String INVITATION_STATUS_REQUIRED = "상태 값은 필수입니다.";
     public static final String INVITATION_STATUS_PATTERN = "상태 값은 'ACCEPTED' 또는 'REJECTED' 또는 'PENDING' 여야 합니다.";
 
+    public static final String SETTLEMENT_NAME_REQUIRED = "정산 이름은 필수 항목입니다.";
+    public static final String SETTLEMENT_AMOUNT_POSITIVE = "정산 금액은 0보다 커야 합니다.";
+    public static final String SETTLEMENT_AMOUNT_REQUIRED = "정산 금액은 필수 항목입니다.";
+
+    public static final String TRAVELPLAN_REQUIRED = "여행 일정은 최소 1개 이상 있어야 합니다.";
+    public static final String TRAVELPLAN_ID_REQUIRED = "여행 일정 이름은 필수 항목입니다.";
+    public static final String TRAVELPLAN_LOCATION_REQUIRED = "여행 일정의 위치는 필수 항목입니다.";
+    public static final String TRAVELPLAN_NAME_REQUIRED = "여행 일정 이름은 필수 항목입니다.";
+    public static final String TRAVELPLAN_SCHEDULED_DAY_REQUIRED = "여행 일정 날짜는 필수 항목입니다.";
 
 }
